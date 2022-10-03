@@ -24,34 +24,27 @@ public class Controller {
             Files.walk(Paths.get(args[0]))
                     .filter(Files::isRegularFile)
                     .filter(path -> path.toString().endsWith(".png"))
-                    .forEach(this::parse);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+                    .forEach(path -> {
+                        try {
+                            parse(path);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    private void parse(Path path) {
-        List<BufferedImageWrapper> ranks;
-        List<BufferedImageWrapper> suits;
-
-        try {
-            ranks = repository.getRanks();
-            suits = repository.getSuits();
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to read an image by given path.", e);
-        }
+    private void parse(Path path) throws IOException {
+        List<BufferedImageWrapper> ranks = repository.getRanks();
+        List<BufferedImageWrapper> suits = repository.getSuits();
 
         int[][][] rankRegions = repository.getRangRegions();
         int[][][] suitRegions = repository.getSuitRegions();
 
 
-        BufferedImage image;
-
-        try {
-            image = ImageIO.read(path.toFile());
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to read an image by given path.", e);
-        }
+        BufferedImage image = ImageIO.read(path.toFile());
 
         String result = path.getFileName().toString() + " - ";
 

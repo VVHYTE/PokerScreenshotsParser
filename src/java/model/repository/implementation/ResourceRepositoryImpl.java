@@ -10,27 +10,26 @@ import javax.imageio.ImageIO;
 
 import model.BufferedImageWrapper;
 import model.repository.ResourceRepository;
-import view.Main;
 
 public class ResourceRepositoryImpl implements ResourceRepository {
 
     @Override
     public List<BufferedImageWrapper> getRanks() throws IOException {
 
-        return getFileByName(new String[]{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"});
+        return getFileByName("ranks", new String[]{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"});
     }
 
     @Override
     public List<BufferedImageWrapper> getSuits() throws IOException {
 
-        return getFileByName(new String[]{"c", "d", "h", "s"});
+        return getFileByName("suits", new String[]{"c", "d", "h", "s"});
     }
 
-    private List<BufferedImageWrapper> getFileByName(final String[] namesArray) throws IOException {
+    private List<BufferedImageWrapper> getFileByName(String directory, String[] namesArray) throws IOException {
         List<BufferedImageWrapper> result = new ArrayList<>();
 
         File resources = new File(
-                Objects.requireNonNull(Main.class.getClassLoader().getResource("."))
+                Objects.requireNonNull(getClass().getClassLoader().getResource("."))
                         .getFile()
         );
 
