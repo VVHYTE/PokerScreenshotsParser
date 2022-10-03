@@ -1,14 +1,12 @@
 import java.awt.image.BufferedImage;
 
-public class Feature {
+public class BufferedImageWrapper {
 
-    private String name;
-    private double limit;
-    private BufferedImage original;
+    private final String name;
+    private final BufferedImage original;
 
-    public Feature(String name, double limit, BufferedImage original) {
+    public BufferedImageWrapper(String name, BufferedImage original) {
         this.name = name;
-        this.limit = limit;
         this.original = original;
     }
 
